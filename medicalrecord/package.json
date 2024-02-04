@@ -60,7 +60,8 @@
     "ethers": "^5.4.7",
     "hardhat-gas-reporter": "^1.0.8",
     "solidity-coverage": "^0.8.0",
-    "typechain": "^8.1.0"
+    "typechain": "^8.1.0",
+    "@babel/plugin-proposal-private-property-in-object": "^1.0.10"
   }
 }
 
