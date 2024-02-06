@@ -10,6 +10,18 @@ export const provider = (state = {}, action) => {
         ...state,
         chainId: action.chainId,
       };
+
+    case "ACCOUNT_LOADED":
+      return{
+        ...state,
+        chainId: action.chainId,
+      };
+      
+    case "ETHER_BALANCE_LOADED" :
+      return{
+        ...state,
+        balance: action.balance,
+      };
     default:
       return state;
   }

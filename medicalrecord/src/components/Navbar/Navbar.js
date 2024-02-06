@@ -3,10 +3,13 @@ import "./navbar.css";
 import healthReport from "../../assets/health-report.png";
 import { useDispatch, useSelector } from "react-redux";
 import { loadAccount } from "../../store/interactions";
+import Blockies from "react-blockies";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const provider=useSelector((state)=>state.provider.connection);
+  const account = useSelector((state) => state.provider.account);
+  const balance = useSelector((state) => state.provider.balance);
   const connectHandler=async()=> {
     await loadAccount(provider,dispatch);
   }
@@ -37,11 +40,37 @@ const Navbar = () => {
         </div>
 
         <div className="nav__balance">
-          <button className="nav__balance-box" onClick={connectHandler}>Connect</button>
+          {balance ? (
+            <p className="nav__myBalance">
+              <small>My Balance: </small>
+              {Number(balance).toFixed(4)}
+            </p>
+          ) : (
+            <p className="nav__myBalance">
+              <small>My Balance: </small>0 ETH
+            </p>
+          )}
+          {account ? (
+            <a className="nav__myAccount" href="#">
+              <Blockies seed={account}
+                size={10}
+                scale={3}
+                color="2187D0"
+                bgColor="#F1F2F9"
+                spotColor="#767f92"
+                className="identicon"
+                    />
+              {account.slice(0,5) + "...." + account.slice(38,42)}
+              
+            </a>
+          ):(
+            <button className="nav__balance-box" onClick={connectHandler}>Connect</button>
+          )}
+          
         </div>
     </div>
     
   );
 };
 
-export default Navbar
+export default Navbar;
