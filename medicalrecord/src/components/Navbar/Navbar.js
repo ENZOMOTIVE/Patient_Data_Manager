@@ -4,12 +4,15 @@ import healthReport from "../../assets/health-report.png";
 import { useDispatch, useSelector } from "react-redux";
 import { loadAccount } from "../../store/interactions";
 import Blockies from "react-blockies";
+import config from "../../config.json";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const provider=useSelector((state)=>state.provider.connection);
   const account = useSelector((state) => state.provider.account);
   const balance = useSelector((state) => state.provider.balance);
+  const chainId = useSelector((state) => state.provider.chainId);
+
   const connectHandler=async()=> {
     await loadAccount(provider,dispatch);
   }
@@ -30,7 +33,7 @@ const Navbar = () => {
                 <h2>Medical Record Storer</h2>
         </div>
         <div className="nav__networkSelector">
-            <select name="network" id="network" onCharge={networkHandler} >
+            <select name="network" id="network" onCharge={networkHandler} value={config[chainId] ? `0x${chainId.toString(16)}` : `0`}>
                  <option value= "0" disabled>
                     Select Network
                  </option>
@@ -52,7 +55,8 @@ const Navbar = () => {
           )}
           {account ? (
             <a className="nav__myAccount" href="#">
-              <Blockies seed={account}
+              <Blockies 
+                seed={account}
                 size={10}
                 scale={3}
                 color="2187D0"

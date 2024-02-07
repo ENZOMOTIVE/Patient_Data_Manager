@@ -26,3 +26,21 @@ export const provider = (state = {}, action) => {
       return state;
   }
 };
+
+const DEFAULT_MEDICAL_STATE = {
+  loaded: false,
+  contract: {},
+};
+
+export const medical = (state = DEFAULT_MEDICAL_STATE, action) => {
+  switch (action.type) {
+    case "MEDICAL_LOADED":
+      return{
+        ...state,
+        loaded: true,
+        contract: action.medical,
+      };
+      default:
+        return state;
+  }
+};
