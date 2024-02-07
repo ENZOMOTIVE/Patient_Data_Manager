@@ -5,7 +5,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 /* Import Reducers */
 import { provider, medical } from "./reducers";
 
-const reducer = combineReducers({ provider });
+const reducer = combineReducers({ provider, medical });
 
 const initialState = {};
 
