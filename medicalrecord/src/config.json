@@ -1,6 +1,10 @@
-
 {
     "31337": {
+        "MedicalRecords": {
+            "address": "0x712516e61C8B383dF4A63CFe83d7701Bce54B03e"
+        }
+    },
+    "1337": {
         "MedicalRecords": {
             "address": "0x712516e61C8B383dF4A63CFe83d7701Bce54B03e"
         }

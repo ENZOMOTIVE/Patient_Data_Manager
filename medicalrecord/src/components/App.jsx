@@ -22,7 +22,7 @@ function App() {
   const loadBlockchainData = async () => {
     const provider = loadProvider(dispatch);
     const chainId = await loadNetwork(provider, dispatch);
-    const medical_config = config[chainId]?.MedicalRecords; // Use optional chaining to handle undefined config[chainId]
+    const medical_config = config[chainId]?.MedicalRecords; 
     if (!medical_config) {
       console.error(`Medical config not found for chainId: ${chainId}`);
       return;
