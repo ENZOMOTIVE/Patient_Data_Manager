@@ -18,10 +18,15 @@ import config from "../config.json";
 import Alert from "./Alert/Alert";
 function App() {
   const dispatch = useDispatch();
+
   const loadBlockchainData = async () => {
     const provider = loadProvider(dispatch);
     const chainId = await loadNetwork(provider, dispatch);
-    const medical_config = config[chainId].medical;
+    const medical_config = config[chainId]?.MedicalRecords; // Use optional chaining to handle undefined config[chainId]
+    if (!medical_config) {
+      console.error(`Medical config not found for chainId: ${chainId}`);
+      return;
+    }
     window.ethereum.on("accountsChanged", () => {
       loadAccount(provider, dispatch);
     });
@@ -32,6 +37,7 @@ function App() {
     loadAllData(provider, medical, dispatch);
     subscribeToEvents(medical, dispatch);
   };
+
   useEffect(() => {
     loadBlockchainData();
   });

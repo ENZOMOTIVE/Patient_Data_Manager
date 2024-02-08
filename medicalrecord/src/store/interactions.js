@@ -1,31 +1,53 @@
 import { ethers } from "ethers";
 import MEDICAL_ABI from "../abis/MedicalRecords.json";
+
 export const loadProvider = (dispatch) => {
   const connection = new ethers.providers.Web3Provider(window.ethereum);
   dispatch({ type: "PROVIDER_LOADED", connection });
   return connection;
 };
+
 export const loadNetwork = async (provider, dispatch) => {
   const { chainId } = await provider.getNetwork();
   dispatch({ type: "NETWORK_LOADED", chainId });
   return chainId;
 };
+
 export const loadAccount = async (provider, dispatch) => {
-  const accounts = await window.ethereum.request({
-    method: "eth_requestAccounts",
-  });
-  const account = ethers.utils.getAddress(accounts[0]);
-  dispatch({ type: "ACCOUNT_LOADED", account });
-  let balance = await provider.getBalance(account);
-  balance = ethers.utils.formatEther(balance);
-  dispatch({ type: "ETHER_BALANCE_LOADED", balance });
-  return account;
+  if (!provider) {
+    console.error('Provider is undefined');
+    return;
+  }
+
+  try {
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    const account = ethers.utils.getAddress(accounts[0]);
+    dispatch({ type: "ACCOUNT_LOADED", account });
+
+    if (provider.getBalance) {
+      let balance = await provider.getBalance(account);
+      balance = ethers.utils.formatEther(balance);
+      dispatch({ type: "ETHER_BALANCE_LOADED", balance });
+    } else {
+      console.error('Provider does not have getBalance method');
+    }
+
+    return account;
+  } catch (error) {
+    console.error('Error loading account:', error);
+    dispatch({ type: "ACCOUNT_LOAD_ERROR", error });
+    return null;
+  }
 };
+
 export const loadMedical = (provider, address, dispatch) => {
   const medical = new ethers.Contract(address, MEDICAL_ABI, provider);
   dispatch({ type: "MEDICAL_LOADED", medical });
   return medical;
 };
+
 export const loadAllData = async (provider, medical, dispatch) => {
   const block = await provider.getBlockNumber();
   const medicalStream = await medical.queryFilter(
