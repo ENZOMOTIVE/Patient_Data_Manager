@@ -14,11 +14,14 @@ import {
   loadProvider,
   subscribeToEvents,
 } from "../store/interactions";
+
 import config from "../config.json";
 import Alert from "./Alert/Alert";
+
 function App() {
   const dispatch = useDispatch();
 
+  
   const loadBlockchainData = async () => {
     const provider = loadProvider(dispatch);
     const chainId = await loadNetwork(provider, dispatch);
