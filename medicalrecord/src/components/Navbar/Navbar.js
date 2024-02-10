@@ -11,7 +11,10 @@ const Navbar = () => {
   const account = useSelector((state) => state.provider.account);
   const balance = useSelector((state) => state.provider.balance);
   const chainId = useSelector((state) => state.provider.chainId);
-  
+
+  // Log the component render
+  console.log("Navbar component rendered");
+
   useEffect(() => {
     // Load provider when component mounts
     const provider = loadProvider(dispatch);
@@ -36,7 +39,7 @@ const Navbar = () => {
 
   const handleButtonClick = () => {
     window.location.reload();
-    };
+  };
 
   useEffect(() => {
     // Load account when provider changes
@@ -56,7 +59,7 @@ const Navbar = () => {
           name="network"
           id="network"
           onChange={networkHandler}
-          value={chainId} // Use plain chainId without manipulation
+          value={chainId} 
         >
           <option value="" disabled>
             Select Network

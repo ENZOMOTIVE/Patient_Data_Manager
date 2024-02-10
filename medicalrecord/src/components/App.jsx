@@ -67,7 +67,6 @@ function App() {
         <Navbar />
         <Option />
         <Routes>
-          
           <Route path="/" exact element={<Form />} />
           <Route path="/Data" element={<Data />} />
         </Routes>
