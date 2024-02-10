@@ -22,44 +22,37 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const loadBlockchainData = async () => {
+    const initializeBlockchainData = async () => {
+      // Load provider and network information
       const provider = loadProvider(dispatch);
-  
       if (!provider) {
         console.error("Provider is undefined");
         return;
       }
-  
-      try {
-        const chainId = await loadNetwork(provider, dispatch);
-        const medical_config = config[chainId]?.MedicalRecords;
-        if (!medical_config) {
-          console.error(`Medical config not found for chainId: ${chainId}`);
-          return;
-        }
-  
-        window.ethereum.on("accountsChanged", () => {
-          loadAccount(provider, dispatch);
-        });
-  
-        window.ethereum.on("chainChanged", () => {
-          window.location.reload();
-        });
-  
-        // Call loadAccount and await its result
-        await loadAccount(provider, dispatch);
-  
-        const medical = loadMedical(provider, medical_config.address, dispatch);
-        loadAllData(provider, medical, dispatch);
-        subscribeToEvents(medical, dispatch);
-      } catch (error) {
-        console.error("Error loading blockchain data:", error);
+      const chainId = await loadNetwork(provider, dispatch);
+
+      // Set up event listeners
+      window.ethereum.on("accountsChanged", () => {
+        loadAccount(provider, dispatch);
+      });
+      window.ethereum.on("chainChanged", () => {
+        window.location.reload();
+      });
+
+      // Load account and medical data
+      await loadAccount(provider, dispatch);
+      const medicalConfig = config[chainId]?.MedicalRecords;
+      if (!medicalConfig) {
+        console.error(`Medical config not found for chainId: ${chainId}`);
+        return;
       }
+      const medical = loadMedical(provider, medicalConfig.address, dispatch);
+      loadAllData(provider, medical, dispatch);
+      subscribeToEvents(medical, dispatch);
     };
-  
-    loadBlockchainData();
+
+    initializeBlockchainData();
   }, [dispatch]);
-  
 
   return (
     <div className="App">

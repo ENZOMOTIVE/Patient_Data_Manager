@@ -1,26 +1,26 @@
 import React, { useEffect } from "react";
 import "./navbar.css";
 import healthReport from "../../assets/health-report.png";
-import { loadProvider, loadAccount } from "../../store/interactions";
+import { loadAccount, loadProvider } from "../../store/interactions";
 import { useDispatch, useSelector } from "react-redux";
 import Blockies from "react-blockies";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const provider = loadProvider(dispatch);
+    // Dispatch an action to set the provider in the Redux store
+    dispatch({ type: "SET_PROVIDER", provider });
+  }, [dispatch]);
+
   const provider = useSelector((state) => state.provider.connection);
   const account = useSelector((state) => state.provider.account);
   const balance = useSelector((state) => state.provider.balance);
   const chainId = useSelector((state) => state.provider.chainId);
 
   // Log the component render
-  console.log("Navbar component rendered");
-
-  useEffect(() => {
-    // Load provider when component mounts
-    const provider = loadProvider(dispatch);
-    // Dispatch an action to set the provider in the Redux store
-    dispatch({ type: "SET_PROVIDER", provider });
-  }, [dispatch]);
+  console.log("Navbar component rendered print");
 
   const connectHandler = async () => {
     await loadAccount(provider, dispatch);
@@ -46,7 +46,8 @@ const Navbar = () => {
     if (provider) {
       loadAccount(provider, dispatch);
     }
-  }, [provider, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [provider]);
 
   return (
     <div className="Navbar">
