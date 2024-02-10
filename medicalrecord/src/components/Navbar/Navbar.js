@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
 import "./navbar.css";
 import healthReport from "../../assets/health-report.png";
-import { loadAccount } from "../../store/interactions";
+import { loadProvider, loadAccount } from "../../store/interactions";
 import { useDispatch, useSelector } from "react-redux";
 import Blockies from "react-blockies";
-// eslint-disable-next-line
-import config from "../../config.json";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -14,6 +12,13 @@ const Navbar = () => {
   const balance = useSelector((state) => state.provider.balance);
   const chainId = useSelector((state) => state.provider.chainId);
   
+  useEffect(() => {
+    // Load provider when component mounts
+    const provider = loadProvider(dispatch);
+    // Dispatch an action to set the provider in the Redux store
+    dispatch({ type: "SET_PROVIDER", provider });
+  }, [dispatch]);
+
   const connectHandler = async () => {
     await loadAccount(provider, dispatch);
   };
@@ -29,11 +34,15 @@ const Navbar = () => {
     });
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await loadAccount(provider, dispatch);
+  const handleButtonClick = () => {
+    window.location.reload();
     };
-    fetchData();
+
+  useEffect(() => {
+    // Load account when provider changes
+    if (provider) {
+      loadAccount(provider, dispatch);
+    }
   }, [provider, dispatch]);
 
   return (
@@ -49,7 +58,7 @@ const Navbar = () => {
           onChange={networkHandler}
           value={chainId} // Use plain chainId without manipulation
         >
-           <option value="" disabled>
+          <option value="" disabled>
             Select Network
           </option>
           <option value="31337">Localhost</option>
@@ -70,8 +79,7 @@ const Navbar = () => {
           </p>
         )}
         {account ? (
-          /* eslint-disable jsx-a11y/anchor-is-valid */
-          <a className="nav__myAccount" href="#">
+          <button className="nav__myAccount" onClick={handleButtonClick}>
             {account.slice(0, 5) + "...." + account.slice(38, 42)}
             <Blockies
               seed={account}
@@ -82,7 +90,7 @@ const Navbar = () => {
               spotColor="#767F92"
               className="identicon"
             />
-          </a>
+          </button>
         ) : (
           <button className="nav__balance-box" onClick={connectHandler}>
             Connect

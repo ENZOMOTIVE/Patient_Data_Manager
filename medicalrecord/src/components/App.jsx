@@ -4,7 +4,7 @@ import Data from "./Data/Data";
 import Form from "./Form/Form";
 import Navbar from "./Navbar/Navbar";
 import Option from "./Option/Option";
-import { useEffect } from "react";
+import React ,{ useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
   loadAccount,
@@ -67,6 +67,7 @@ function App() {
         <Navbar />
         <Option />
         <Routes>
+          
           <Route path="/" exact element={<Form />} />
           <Route path="/Data" element={<Data />} />
         </Routes>
