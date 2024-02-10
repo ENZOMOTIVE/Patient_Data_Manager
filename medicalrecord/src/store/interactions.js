@@ -2,10 +2,17 @@ import { ethers } from "ethers";
 import MEDICAL_ABI from "../abis/MedicalRecords.json";
 
 export const loadProvider = (dispatch) => {
-  const connection = new ethers.providers.Web3Provider(window.ethereum);
-  dispatch({ type: "PROVIDER_LOADED", connection });
-  return connection;
+  if (window.ethereum) {
+    const connection = new ethers.providers.Web3Provider(window.ethereum);
+    console.log("Provider initialized:", connection);
+    dispatch({ type: "PROVIDER_LOADED", connection });
+    return connection;
+  } else {
+    console.error('window.ethereum is undefined. Please make sure MetaMask or a compatible provider is installed.');
+    return null;
+  }
 };
+
 
 export const loadNetwork = async (provider, dispatch) => {
   const { chainId } = await provider.getNetwork();
@@ -15,7 +22,7 @@ export const loadNetwork = async (provider, dispatch) => {
 
 export const loadAccount = async (provider, dispatch) => {
   if (!provider) {
-    console.error('Provider is undefined');
+    console.error('Provider is undefined'); // This line is being triggered
     return;
   }
 

@@ -4,6 +4,7 @@ import healthReport from "../../assets/health-report.png";
 import { loadAccount } from "../../store/interactions";
 import { useDispatch, useSelector } from "react-redux";
 import Blockies from "react-blockies";
+// eslint-disable-next-line
 import config from "../../config.json";
 
 const Navbar = () => {
@@ -39,7 +40,7 @@ const Navbar = () => {
     <div className="Navbar">
       <div className="nav__name">
         <img src={healthReport} alt="" width="40" height="40" />
-        <h2>Subham Medical Record </h2>
+        <h2>Health Data Manager </h2>
       </div>
       <div className="nav__networkSelector">
         <select

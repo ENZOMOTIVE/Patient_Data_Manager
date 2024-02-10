@@ -21,29 +21,46 @@ import Alert from "./Alert/Alert";
 function App() {
   const dispatch = useDispatch();
 
-  
-  const loadBlockchainData = async () => {
-    const provider = loadProvider(dispatch);
-    const chainId = await loadNetwork(provider, dispatch);
-    const medical_config = config[chainId]?.MedicalRecords; 
-    if (!medical_config) {
-      console.error(`Medical config not found for chainId: ${chainId}`);
-      return;
-    }
-    window.ethereum.on("accountsChanged", () => {
-      loadAccount(provider, dispatch);
-    });
-    window.ethereum.on("chainChanged", () => {
-      window.location.reload();
-    });
-    const medical = loadMedical(provider, medical_config.address, dispatch);
-    loadAllData(provider, medical, dispatch);
-    subscribeToEvents(medical, dispatch);
-  };
-
   useEffect(() => {
+    const loadBlockchainData = async () => {
+      const provider = loadProvider(dispatch);
+  
+      if (!provider) {
+        console.error("Provider is undefined");
+        return;
+      }
+  
+      try {
+        const chainId = await loadNetwork(provider, dispatch);
+        const medical_config = config[chainId]?.MedicalRecords;
+        if (!medical_config) {
+          console.error(`Medical config not found for chainId: ${chainId}`);
+          return;
+        }
+  
+        window.ethereum.on("accountsChanged", () => {
+          loadAccount(provider, dispatch);
+        });
+  
+        window.ethereum.on("chainChanged", () => {
+          window.location.reload();
+        });
+  
+        // Call loadAccount and await its result
+        await loadAccount(provider, dispatch);
+  
+        const medical = loadMedical(provider, medical_config.address, dispatch);
+        loadAllData(provider, medical, dispatch);
+        subscribeToEvents(medical, dispatch);
+      } catch (error) {
+        console.error("Error loading blockchain data:", error);
+      }
+    };
+  
     loadBlockchainData();
-  });
+  }, [dispatch]);
+  
+
   return (
     <div className="App">
       <div className="navbar">
