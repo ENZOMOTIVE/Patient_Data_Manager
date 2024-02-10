@@ -1,11 +1,19 @@
 import { ethers } from "ethers";
 import MEDICAL_ABI from "../abis/MedicalRecords.json";
 
+let cachedProvider = null;
+
 export const loadProvider = (dispatch) => {
+  // If the provider is already initialized, return the cached provider
+  if (cachedProvider) {
+    return cachedProvider;
+  }
+
   if (window.ethereum) {
     const connection = new ethers.providers.Web3Provider(window.ethereum);
     console.log("Provider initialized:", connection);
     dispatch({ type: "PROVIDER_LOADED", connection });
+    cachedProvider = connection; // Cache the provider
     return connection;
   } else {
     console.error('window.ethereum is undefined. Please make sure MetaMask or a compatible provider is installed.');
