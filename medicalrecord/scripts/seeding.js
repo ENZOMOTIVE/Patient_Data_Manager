@@ -240,7 +240,7 @@ async function main() {
   transactionResponse = await medical
     .connect(user1)
     .addRecord(
-      "Mia Khalifa",
+      "Ayushi",
       25,
       "Female",
       "B negative",
@@ -500,7 +500,7 @@ async function main() {
   transactionResponse = await medical
     .connect(user1)
     .addRecord(
-      "Mia Khalifa",
+      "Ayushi",
       25,
       "Female",
       "B negative",
@@ -760,7 +760,7 @@ async function main() {
   transactionResponse = await medical
     .connect(user1)
     .addRecord(
-      "Mia Khalifa",
+      "Ayushi",
       25,
       "Female",
       "B negative",
@@ -1020,7 +1020,7 @@ async function main() {
   transactionResponse = await medical
     .connect(user1)
     .addRecord(
-      "Mia Khalifa",
+      "Ayushi",
       25,
       "Female",
       "B negative",

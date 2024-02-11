@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./navbar.css";
-import healthReport from "../../assets/health-report.png";
+
 import { loadAccount, loadProvider } from "../../store/interactions";
 import { useDispatch, useSelector } from "react-redux";
 import Blockies from "react-blockies";
@@ -52,7 +52,7 @@ const Navbar = () => {
   return (
     <div className="Navbar">
       <div className="nav__name">
-        <img src={healthReport} alt="" width="40" height="40" />
+        
         <h2>Health Data Manager </h2>
       </div>
       <div className="nav__networkSelector">
