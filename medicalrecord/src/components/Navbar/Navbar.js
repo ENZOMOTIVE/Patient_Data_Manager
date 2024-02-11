@@ -53,7 +53,7 @@ const Navbar = () => {
     <div className="Navbar">
       <div className="nav__name">
         
-        <h2>Health Data Manager </h2>
+        <h2>Etherium based Electronic Health Record </h2>
       </div>
       <div className="nav__networkSelector">
         <select
