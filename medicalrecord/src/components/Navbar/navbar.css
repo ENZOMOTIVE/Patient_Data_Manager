@@ -1,57 +1,104 @@
-.Navbar{
+.Navbar {
     display: flex;
     flex-direction: row;
     height: 4rem;
     background-color: #333;
-}
-.nav__name{
+    padding: 0 2rem;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
+  }
+  
+  .nav__name {
     display: flex;
-   flex: 1;
-   align-items: center;
-   justify-content: center;
-   color: white;
-}
-.nav__name img{ padding: 2rem;}
-.nav__networkSelector{
-    display: flex;
-   flex:1;
-   align-items: center;
-}
-.nav__networkSelector select{
-    border: 2px solid white;
-    padding: 0.5rem 1.5rem;
-    border-radius:0.4em;
-    margin: 2rem;
-    background-color: #333;
+    align-items: center;
     color: white;
-}
-.nav__balance{
-    flex: 1;
-    padding: 1rem;
+    font-size: 1.5rem;
+    text-transform: uppercase; /* Transform text to uppercase */
+  }
+  
+  .nav__name img {
+    width: 3rem;
+    margin-right: 1rem;
+    border-radius: 50%; /* Make image circular */
+    border: 2px solid #fff; /* Add border around the image */
+    transition: transform 0.3s; /* Add transition for hover effect */
+  }
+  
+  .nav__name img:hover {
+    transform: rotate(360deg); /* Rotate image on hover */
+  }
+  
+  .nav__networkSelector select {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    margin: 0 1rem;
+    background-color: #555;
+    color: white;
+    font-size: 1rem;
+    appearance: none; /* Remove default arrow */
+    outline: none; /* Remove default focus outline */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  /* Custom arrow */
+  .nav__networkSelector select::after {
+    content: "\25BC"; /* Unicode character for down arrow */
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    transform: translateY(-50%);
+    pointer-events: none; /* Ensure the arrow does not affect pointer events */
+  }
+  
+  /* Hover effect */
+  .nav__networkSelector select:hover {
+    background-color: #444;
+  }
+  
+  /* Focus effect */
+  .nav__networkSelector select:focus {
+    background-color: #444;
+    transform: scale(1.05); /* Scale up on focus */
+  }
+  .nav__balance {
     display: flex;
     align-items: center;
     justify-content: center;
-    
-}
-.nav__balance-box{
+    color: white;
+  }
+  
+  .nav__balance-box {
     border: 2px solid white;
     border-radius: 2rem;
-    flex:1;
-    height: 2.5rem;
-    margin: 2rem 4rem ;
+    padding: 0.5rem 1rem;
+    margin: 0 2rem;
     cursor: pointer;
-}
-select option { color: white; }
-
-.nav__myBalance{
-    color: white;
-}
-.nav__myAccount{
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.identicon{
+    transition: background-color 0.3s;
+  }
+  
+  .nav__balance-box:hover {
+    background-color: #555;
+    transform: translateY(-2px); /* Add slight upward movement on hover */
+  }
+  
+  .nav__myBalance,
+  .nav__myAccount {
+    margin-right: 1rem;
+    font-size: 1.2rem; /* Increase font size */
+  }
+  
+  .identicon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
     margin-left: 0.5rem;
-}
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Add glow effect */
+    transition: box-shadow 0.3s; /* Add transition for glow effect */
+  }
+  
+  .identicon:hover {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); /* Increase glow on hover */
+  }
+  

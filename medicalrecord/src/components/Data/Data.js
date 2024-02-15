@@ -10,13 +10,15 @@ const Data = () => {
   const provider = useSelector((state) => state.provider.connection);
   const medical = useSelector((state) => state.medical.contract);
   const dispatch = useDispatch();
+
   const deleteHandler = (e, data) => {
     if (window.confirm("Do you want to delete the record?")) {
       deleteData(medical, data.recordId, dispatch, provider);
     } else {
-      console.log("Data not delete");
+      console.log("Data not deleted");
     }
   };
+
   return (
     <div>
       {account ? (
@@ -33,37 +35,31 @@ const Data = () => {
                 <th>Allergies</th>
                 <th>Diagnosis</th>
                 <th>Treatment</th>
-
                 <th>Delete</th>
               </tr>
             </thead>
             <tbody>
-              {orderData &&
-                orderData.map((data, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      {/* <td>{data.recordIdNew}</td> */}
-                      <td>{data.formattedTimestamp}</td>
-                      <td>{data.name}</td>
-                      <td>{data.ageNew} </td>
-                      <td>{data.gender}</td>
-                      <td>{data.bloodType}</td>
-                      <td>{data.allergies}</td>
-                      <td>{data.diagnosis}</td>
-                      <td>{data.treatment}</td>
-
-                      <td>
-                        <button
-                          className="delete-button"
-                          onClick={(e) => deleteHandler(e, data)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
+              {orderData.map((data, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{data.formattedTimestamp}</td>
+                  <td>{data.name}</td>
+                  <td>{data.ageNew}</td>
+                  <td>{data.gender}</td>
+                  <td>{data.bloodType}</td>
+                  <td>{data.allergies}</td>
+                  <td>{data.diagnosis}</td>
+                  <td>{data.treatment}</td>
+                  <td>
+                    <button
+                      className="delete-button"
+                      onClick={(e) => deleteHandler(e, data)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

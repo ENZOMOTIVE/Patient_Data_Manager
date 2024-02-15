@@ -23,14 +23,15 @@ export const loadProvider = (dispatch) => {
 
 
 export const loadNetwork = async (provider, dispatch) => {
-  const { chainId } = await provider.getNetwork();
+  // Assuming you want to hardcode the chainId to 31337
+  const chainId = 31337;
   dispatch({ type: "NETWORK_LOADED", chainId });
   return chainId;
 };
 
 export const loadAccount = async (provider, dispatch) => {
   if (!provider) {
-    console.error('Provider is undefined'); // This line is being triggered
+    console.error('Provider is undefined'); 
     return;
   }
 
@@ -51,7 +52,7 @@ export const loadAccount = async (provider, dispatch) => {
 
     return account;
   } catch (error) {
-    console.error('Error loading account:', error);
+    console.error('Error loading account:', error); // Log the error object
     dispatch({ type: "ACCOUNT_LOAD_ERROR", error });
     return null;
   }
